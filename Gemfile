@@ -1,6 +1,6 @@
 source 'https://rubygems.org'
 
-
+gem 'dotenv-rails', :groups => [:development, :test]
 # Bundle edge Rails instead: gem 'rails', github: 'rails/rails'
 gem 'rails', '4.2.5'
 # Use postgresql as the database for Active Record
@@ -40,6 +40,8 @@ group :development, :test do
   gem 'shoulda'
   gem 'rspec-collection_matchers'
   gem 'devise'
+  gem 'omniauth-facebook'
+
 end
 
 group :development do
