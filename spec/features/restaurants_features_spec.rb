@@ -1,5 +1,5 @@
 require 'rails_helper'
-require 'web_helper'
+
 
 feature 'restaurants' do
   context 'no restaurants have been added' do
@@ -72,14 +72,27 @@ feature 'restaurants' do
   end
 
   context 'deleting restaurants' do
-    before {Restaurant.create name: 'KFC'}
+
 
     scenario 'removes a restaurant when a user clicks a delete link' do
       visit '/restaurants'
       sign_up
-      click_link 'Delete KFC'
-      expect(page).not_to have_content 'KFC'
+      add_restaurant
+      click_link 'Delete classic dive'
+      expect(page).not_to have_content 'classic dive'
       expect(page).to have_content 'Restaurant deleted successfully'
+    end
+  end
+
+  context 'deleting restaurants a user has not created' do
+    before {Restaurant.create name: 'KFC'}
+
+    scenario 'a user cannot delete a restaurant they did not create' do
+      visit '/restaurants'
+      sign_up
+      add_restaurant
+      click_link 'Delete KFC'
+      expect(page).to have_content 'KFC'
     end
   end
 

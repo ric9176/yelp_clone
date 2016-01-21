@@ -1,6 +1,13 @@
 class RestaurantsController < ApplicationController
 
   before_action :authenticate_user!, :except => [:index, :show]
+  before_action :check_author, :only => [:destroy]
+
+  def check_author
+    if current_user.id != Restaurant.find(params[:id]).user_id
+      redirect_to '/restaurants'
+    end
+  end
 
   def index
     @restaurants = Restaurant.all
@@ -43,6 +50,9 @@ class RestaurantsController < ApplicationController
 
 private
   def restaurant_params
-    params.require(:restaurant).permit(:name)
+    new_params = params.require(:restaurant).permit(:name)
+    new_params[:user_id] = current_user.id
+    new_params
   end
+
 end
