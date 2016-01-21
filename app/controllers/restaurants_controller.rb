@@ -9,6 +9,8 @@ class RestaurantsController < ApplicationController
     end
   end
 
+
+
   def index
     @restaurants = Restaurant.all
   end
@@ -48,7 +50,7 @@ class RestaurantsController < ApplicationController
     redirect_to '/restaurants'
   end
 
-private
+
   def restaurant_params
     new_params = params.require(:restaurant).permit(:name)
     new_params[:user_id] = current_user.id
