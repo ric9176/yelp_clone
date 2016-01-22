@@ -16,15 +16,7 @@ feature 'reviewing' do
     expect(page).to have_content('so so')
   end
 
-  scenario 'displays an average rating for all reviews' do
-    visit '/restaurants'
-    sign_up
-    leave_review('So so', '3')
-    click_link 'Sign out'
-    second_sign_up
-    leave_review('Great', '5')
-    expect(page).to have_content('Average rating: 4')
-  end
+
 
   def leave_review(thoughts, rating)
     visit '/restaurants'
@@ -33,4 +25,15 @@ feature 'reviewing' do
     select rating, from: 'Rating'
     click_button 'Leave Review'
   end
+
+  scenario 'displays an average rating for all reviews' do
+    visit '/restaurants'
+    sign_up
+    leave_review('so so', '3')
+    click_link 'Sign out'
+    second_sign_up
+    leave_review('Great!', 5)
+    expect(page).to have_content('Average rating: ★★★★☆')
+  end
+
 end
